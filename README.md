@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 Boîte à Idées - Bloc 3 BAI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📝 Présentation
 
-## About Laravel
+**Boîte à Idées** est une application web développée avec le framework **Laravel**, dans le cadre du BTS SIO SLAM.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Elle permet aux utilisateurs :
+- de soumettre des idées,
+- de commenter celles des autres,
+- de modifier ou supprimer leurs propres contenus,
+- avec des limites quotidiennes pour éviter le spam.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> Ce projet a été également utilisé comme **terrain d'entraînement pour les audits de cybersécurité** dans le cadre du Bloc 3 ("Agir en protection des données personnelles et de la sécurité numérique").
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🧩 Fonctionnalités principales
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 🔐 Authentification utilisateur
+- 🧠 Création, modification et suppression d’idées
+- 💬 Ajout et suppression de commentaires (limités à 3 par jour)
+- 📊 Dashboard d’administration
+- ✅ Sécurisation progressive contre les attaques XSS (cross-site scripting)
+- 📦 Importation de données (idées & commentaires) via fichiers CSV
+- 🔎 Filtrage des contenus malveillants avec logs détaillés
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Stack technique
 
-## Laravel Sponsors
+- **PHP 8.3**
+- **Laravel 11**
+- **MySQL**
+- **Blade** (template Laravel)
+- **Tailwind CSS** pour le style
+- **CSV import** + détection d'injection HTML/JS/XML
+- Scripts Python pour analyse/sécurisation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🔐 Focus cybersécurité
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Le projet a été volontairement exposé à des **données malveillantes** pour entraîner la détection et la neutralisation d’attaques XSS stockées :
+- Détection de balises `<script>`, HTML ou XML dans les idées/commentaires
+- Génération automatique de logs (`OK` / `KO`) avec preuve de contamination
+- Nettoyage des données via scripts Python + génération d'`INSERT` SQL propres
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🧪 Exemple de scénario de test
 
-## Code of Conduct
+1. Génération de 20 idées + 40 commentaires avec des payloads XSS (`<script>`, `javascript:`, etc.)
+2. Exécution d’un script Python pour :
+   - analyser les contenus ligne par ligne
+   - logger les risques
+   - produire un SQL propre
+3. Vérification dans Laravel que les vues ne crashent plus
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 👨‍💻 Auteur
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Projet réalisé par **Dervis Sahin** dans le cadre du BTS SIO SLAM, session 2025.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📁 Structure du projet
+
+```
+├── app/
+│   ├── Models/
+│   ├── Http/Controllers/
+├── database/
+│   ├── migrations/
+│   ├── seeders/
+├── resources/
+│   ├── views/
+│   │   ├── ideas/
+│   │   ├── dashboard.blade.php
+├── public/
+├── routes/
+│   └── web.php
+```
+
+---
+
+## ✅ Statut
+
+✔️ Application fonctionnelle  
+✔️ Données vérifiées et nettoyées  
+✔️ Conforme aux bonnes pratiques Laravel & sécurité basique
+
+---
+
+## 📄 Licence
+
+Projet éducatif à but pédagogique uniquement — **non destiné à une mise en production**.
